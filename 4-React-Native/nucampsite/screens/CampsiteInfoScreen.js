@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View, Vibration } from 'react-native';
 import RenderCampsite from "../features/campsites/RenderCampsite";
 import { COMMENTS } from '../shared/comments';
 
 const CampsiteInfoScreen = ({ route }) => {
+
   const { campsite } = route.params;
 
   const [comments, setComments] = useState(COMMENTS);
@@ -37,7 +38,10 @@ const CampsiteInfoScreen = ({ route }) => {
             <RenderCampsite 
             campsite={campsite} 
             isFavorite={favorite}
-            markFavorite={() => setFavorite(true)}    
+            markFavorite={() => {
+                setFavorite(true) 
+                Vibration.vibrate()
+            }}    
             />
             <Text style={styles.commentsTitle}>Comments</Text>
         </>
