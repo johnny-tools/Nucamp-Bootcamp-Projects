@@ -5,6 +5,7 @@ import RenderCampsite from "../features/campsites/RenderCampsite";
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleFavorite } from '../features/favorites/favoritesSlice';
 import { postComment } from '../features/comments/commentsSlice';
+import * as Animatable from 'react-native-animatable';
 
 const CampsiteInfoScreen = ({ route }) => {
 
@@ -56,6 +57,11 @@ const CampsiteInfoScreen = ({ route }) => {
   }
 
   return (
+    <Animatable.View
+          animation='fadeInUp'
+          duration={2000}
+          delay={1000}
+        >
     <FlatList
       data={comments.commentsArray.filter(
         (comment) => comment.campsiteId === campsite.id
@@ -74,11 +80,14 @@ const CampsiteInfoScreen = ({ route }) => {
               markFavorite={() => {
                   dispatch(toggleFavorite(campsite.id)) 
                   Vibration.vibrate()
-            }}
+              }
+            }
             onShowModal={() => setShowModal(!showModal)}    
             />
             <Text style={styles.commentsTitle}>Comments</Text>
-
+          </>
+      }
+      />
             <Modal
               animationType='slide'
               transparent={false}
@@ -123,15 +132,13 @@ const CampsiteInfoScreen = ({ route }) => {
                     resetForm();
                     }} 
                     color='#808080' 
-                    title='Cancel'/>
+                    title='Cancel'
+                  />
                 </View>
             </View>
-            </Modal>
-        </>
-      }
-    />
-    
-  )
+          </Modal>
+        </Animatable.View>
+  );
 };
 
 const styles = StyleSheet.create({
